@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Disease_Frequency {
+  id        Int      @id @default(autoincrement())
+  disease   Disease  @relation(fields: [diseaseId], references: [id])
+  diseaseId Int
+  date      DateTime
+  time      DateTime
+  region    Region   @relation(fields: [regionId], references: [id])
+  regionId  Int
+}
+
+model Drug_Sales {
+  id        Int      @id @default(autoincrement())
+  disease   Disease  @relation(fields: [diseaseId], references: [id])
+  diseaseId Int
+  date      DateTime
+  time      DateTime
+  region    Region   @relation(fields: [regionId], references: [id])
+  regionId  Int
+}
+
+model Disease {
+  id                Int                 @id @default(autoincrement())
+  name              String              @unique // Ensure that disease names are unique
+  Disease_Frequency Disease_Frequency[]
+  Drug_Sales        Drug_Sales[]
+}
+
+model Region {
+  id                Int                 @id @default(autoincrement())
+  name              String              @unique // Ensure that region names are unique
+  Disease_Frequency Disease_Frequency[]
+  Drug_Sales        Drug_Sales[]
+}
