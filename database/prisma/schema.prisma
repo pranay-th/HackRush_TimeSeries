@@ -9,34 +9,82 @@ datasource db {
 
 model Disease_Frequency {
   id        Int      @id @default(autoincrement())
-  disease   Disease  @relation(fields: [diseaseId], references: [id])
   diseaseId Int
   date      DateTime
-  time      DateTime
-  region    Region   @relation(fields: [regionId], references: [id])
   regionId  Int
+  frequency Int
+  disease   Disease  @relation(fields: [diseaseId], references: [id])
+  region    Region   @relation(fields: [regionId], references: [id])
 }
 
 model Drug_Sales {
-  id        Int      @id @default(autoincrement())
-  disease   Disease  @relation(fields: [diseaseId], references: [id])
-  diseaseId Int
-  date      DateTime
-  time      DateTime
-  region    Region   @relation(fields: [regionId], references: [id])
-  regionId  Int
+  id         Int      @id @default(autoincrement())
+  diseaseId  Int
+  date       DateTime
+  regionId   Int
+  salesCount Int
+  disease    Disease  @relation(fields: [diseaseId], references: [id])
+  region     Region   @relation(fields: [regionId], references: [id])
 }
 
 model Disease {
   id                Int                 @id @default(autoincrement())
-  name              String              @unique // Ensure that disease names are unique
+  name              String              @unique
   Disease_Frequency Disease_Frequency[]
   Drug_Sales        Drug_Sales[]
 }
 
 model Region {
   id                Int                 @id @default(autoincrement())
-  name              String              @unique // Ensure that region names are unique
+  name              String              @unique
   Disease_Frequency Disease_Frequency[]
-  Drug_Sales        Drug_Sales[]
+  Drug_Sales        Drug_Sales[]
+}
+
+model Disease_Freq {
+  ID         Int @id @default(autoincrement())
+  Date       String?
+  Count      BigInt?
+  Region_ID  BigInt? @map("Region ID")
+  Disease_ID BigInt? @map("Disease ID")
+  Disease    String?
+  Region     String?
+
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Delhi {
+  ID         Int @id @default(autoincrement())
+  Date       String?
+  Count      BigInt?
+  Region_ID  BigInt? @map("Region ID")
+  Disease_ID BigInt? @map("Disease ID")
+  Disease    String?
+  Region     String?
+
+
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Kolkata {
+  ID         Int @id @default(autoincrement())
+  Date       String?
+  Count      BigInt?
+  Region_ID  BigInt? @map("Region ID")
+  Disease_ID BigInt? @map("Disease ID")
+  Disease    String?
+  Region     String?
+
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Pune {
+  ID         Int @id @default(autoincrement())
+  Date       String?
+  Count      BigInt?
+  Region_ID  BigInt? @map("Region ID")
+  Disease_ID BigInt? @map("Disease ID")
+  Disease    String?
+  Region     String?
+
 }
